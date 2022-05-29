@@ -127,7 +127,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Socket.cpp" />
+    <ClCompile Include="Client_part.cpp" />
+    <ClCompile Include="Server_part.cpp" />
     <ClCompile Include="Thread_Socket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

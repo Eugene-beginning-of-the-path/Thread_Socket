@@ -92,10 +92,35 @@ int start_socket()
 		return 1;
 	}
 	else
-		std::cout << "Socket is listeting..." << std::endl;	
+		std::cout << "Socket is listeting..." << std::endl;		
 
 	//Подитог: мы настроили сервер на прослушивание через определенный сокет и 
 	//указали кол-во макс. процессов подключений - выбрали максимальное значение
+
+	//Этап 5 (только для Сервера). Подтверждение подключения
+
+	sockaddr_in clientInfo;
+
+	ZeroMemory(&clientInfo, sizeof(clientInfo));
+
+	int clientInfo_size = sizeof(clientInfo);
+
+	/*Если подключение подтверждено, то вся информация по текущему соединению передаётся на 
+	новый сокет, который будет отвечать со стороны Сервера за конкретное соединение с конкретным Клиентом*/
+
+	SOCKET ClientConn = accept(ServSocket, (sockaddr*)&clientInfo, &clientInfo_size);
+
+	if (ClientConn == INVALID_SOCKET) {
+		std::cout << "Client detected, but can't connect to a client. Error # " << WSAGetLastError() << std::endl;
+		closesocket(ServSocket);
+		closesocket(ClientConn);
+		WSACleanup();
+		return 1;
+	}
+	else
+		std::cout << "Connection to a client established successfully" << std::endl;
+
+
 }
 
 //https://habr.com/ru/post/582370/
