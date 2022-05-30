@@ -33,5 +33,8 @@
     <ClCompile Include="Client.cpp">
       <Filter>Source Files\NewFilter1</Filter>
     </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Source Files\NewFilter1</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

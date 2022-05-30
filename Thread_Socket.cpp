@@ -1,11 +1,11 @@
 #include <iostream>
 
 //int start_socket();
-int client();
+int server();
 
 void main()
 {
-    client();
+    server();
 }
 
 

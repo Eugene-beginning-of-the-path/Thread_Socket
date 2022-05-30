@@ -5,6 +5,7 @@
 #include <WinSock2.h>
 #include <WS2tcpip.h>
 
+
 using std::cout;
 using std::endl;
 
@@ -34,9 +35,9 @@ int client()
 		return 1;
 	}
 
-	SOCKET ConnectSocket = INVALID_SOCKET; //создаем сокет и временно его закрываем 
-	ConnectSocket = socket(addrResult->ai_family, addrResult->ai_socktype, addrResult->ai_protocol); //создаем сокет на базе найденного Сервер-сокета addrResult
-	if (ConnectSocket == INVALID_SOCKET)
+	SOCKET toServerSocket = INVALID_SOCKET; //создаем сокет и временно его закрываем 
+	toServerSocket = socket(addrResult->ai_family, addrResult->ai_socktype, addrResult->ai_protocol); //создаем сокет на базе найденного Сервер-сокета addrResult
+	if (toServerSocket == INVALID_SOCKET)
 	{
 		cout << "Socket creation failled" << endl;
 		WSACleanup();
@@ -44,12 +45,12 @@ int client()
 		return 1;
 	}
 
-	errorStat = connect(ConnectSocket, addrResult->ai_addr, (int)addrResult->ai_addrlen);
+	errorStat = connect(toServerSocket, addrResult->ai_addr, (int)addrResult->ai_addrlen);
 	if (errorStat == SOCKET_ERROR)
 	{
 		cout << "Unable connect to server";
-		closesocket(ConnectSocket);
-		ConnectSocket = INVALID_SOCKET;
+		closesocket(toServerSocket);
+		toServerSocket = INVALID_SOCKET;
 
 		freeaddrinfo(addrResult);
 		WSACleanup();
@@ -57,13 +58,13 @@ int client()
 	}
 
 	const char* sendBuffer = "Hello from Client";
-	errorStat = send(ConnectSocket, sendBuffer, (int)strlen(sendBuffer), 0); //send() возвращает кол-во переданных данных/SOCKET_ERROR
+	errorStat = send(toServerSocket, sendBuffer, (int)strlen(sendBuffer), 0); //send() возвращает кол-во переданных данных/SOCKET_ERROR
 
 	if (errorStat == SOCKET_ERROR)
 	{
 		cout << "Unable send a message to Server";
-		closesocket(ConnectSocket);
-		ConnectSocket = INVALID_SOCKET;
+		closesocket(toServerSocket);
+		toServerSocket = INVALID_SOCKET;
 
 		freeaddrinfo(addrResult);
 		WSACleanup();
@@ -72,13 +73,13 @@ int client()
 
 	cout << "Bytes sent" << errorStat << " bytes" << endl; //выводим размер отправленного сообщения
 
-	errorStat = shutdown(ConnectSocket, SD_SEND);
+	errorStat = shutdown(toServerSocket, SD_SEND);
 	//SD_SEND - передача данных через сокет прекращена, а прием на сокет продолжает работать - отключили сокет от передачи данных
 	if (errorStat == SOCKET_ERROR)
 	{
 		cout << "Shutdown error";
-		closesocket(ConnectSocket);
-		ConnectSocket = INVALID_SOCKET;
+		closesocket(toServerSocket);
+		toServerSocket = INVALID_SOCKET;
 
 		freeaddrinfo(addrResult);
 		WSACleanup();
@@ -90,7 +91,7 @@ int client()
 	do
 	{
 		ZeroMemory(recvBuffer, sizeof(recvBuffer));
-		errorStat = recv(ConnectSocket, recvBuffer, 512, 0);
+		errorStat = recv(toServerSocket, recvBuffer, 512, 0);
 		if (errorStat > 0)
 		{
 			cout << "Received " << errorStat << " bytes" << endl;
@@ -102,8 +103,8 @@ int client()
 			cout << "recv failed" << endl;
 	} while (errorStat > 0);
 
-	closesocket(ConnectSocket);
-	ConnectSocket = INVALID_SOCKET;
+	closesocket(toServerSocket);
+	toServerSocket = INVALID_SOCKET;
 
 	freeaddrinfo(addrResult);
 	WSACleanup();

@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Client_part.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="Server_part.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Thread_Socket.cpp" />
