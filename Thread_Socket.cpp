@@ -1,9 +1,11 @@
 #include <iostream>
 
-int start_socket();
+//int start_socket();
+int client();
 
-int main()
+void main()
 {
-    start_socket();
+    client();
 }
+
 

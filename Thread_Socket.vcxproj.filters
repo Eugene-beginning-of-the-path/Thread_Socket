@@ -16,6 +16,9 @@
     <Filter Include="Source Files\Win32API">
       <UniqueIdentifier>{8109616f-f003-4c46-bd9c-5b752d79b308}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\NewFilter1">
+      <UniqueIdentifier>{2dfc76b5-b3c4-4f15-895a-ecfe2ae59d4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Thread_Socket.cpp">
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="Client_part.cpp">
       <Filter>Source Files\Win32API</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files\NewFilter1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

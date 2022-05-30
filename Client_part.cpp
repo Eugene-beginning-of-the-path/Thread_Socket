@@ -9,7 +9,7 @@
 using std::cout;
 using std::endl;
 
-int main()
+int mainClient()
 {
 	//Key constants
 	const char SERVER_IP[] = "";					// Enter IPv4 address of Server
@@ -48,7 +48,7 @@ int main()
 		cout << "Client socket initialization is OK" << endl;
 
 	// Establishing a connection to Server
-	sockaddr_in servInfo;
+	sockaddr_in servInfo; //структура хранит подсказки для ОС, какой интерфейс мы хотим найти на стороне сервера 
 
 	ZeroMemory(&servInfo, sizeof(servInfo));
 

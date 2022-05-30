@@ -8,7 +8,7 @@
 
 //Send a message from the clietn to the server and vice versa
 
-int start_socket()
+int mainServer()
 {
 	//Этап 1: Инициализация сокетных интерфейсов Win32API
 	
@@ -50,8 +50,8 @@ int start_socket()
 
 	//Этап 3: Привязка сокета к паре IP-адрес/Порт
 
-	sockaddr_in servInfo; //в него указывает адрес и порт для сокета
-	//ZeroMemory(&servInfo, sizeof(servInfo));
+	sockaddr_in servInfo; //в него указываем адрес и порт для сокета
+	ZeroMemory(&servInfo, sizeof(servInfo)); //зануляем все поля структуры, т.к. считываются те поля, что не равны нулю 
 	servInfo.sin_family = AF_INET; //вид адреса, к которому будет прикреплен сокет - IPv4
 	in_addr ip_to_num; //для перевода адреса IPv4 в байт код для bind()
 	//ниже переводим строку из привычного IPv4 формата в байт код
@@ -71,7 +71,7 @@ int start_socket()
 	{
 		std::cout << "Error socket binding to server info. Error # " << WSAGetLastError();
 		closesocket(ServSocket);
-		WSACleanup();
+		WSACleanup(); //закрываем интерфейсы, открытые через WSAStartup()
 		return 1;
 	}
 	else
